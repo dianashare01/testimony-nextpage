@@ -73,8 +73,36 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .brand svg { flex: none; width: 17px; height: 17px; stroke: var(--accent); }
 
+/* 언어 고르는 자리 — 네 쪽이 서로 오갑니다 */
+.langs {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.langs a {
+  display: block;
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  color: var(--ink-dim);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.langs a:hover { color: var(--ink); }
+.langs a[aria-current="page"] { background: var(--accent); color: var(--on-accent); }
+
 @media (max-width: 430px) {
-  .topbar .wrap { padding: 0 16px; }
+  .topbar .wrap { padding: 0 14px; gap: 8px; }
+  .brand { font-size: 12px; gap: 7px; }
+  .brand svg { width: 15px; height: 15px; }
+  .langs { padding: 2px; }
+  .langs a { padding: 3px 7px; font-size: 10px; letter-spacing: .04em; }
 }
 
 /* ───────── 두 갈래 (전시 안내 / 온라인 전시관) ───────── */
