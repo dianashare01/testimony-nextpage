@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>관리자 — 증언: 다음 페이지</title>
+<link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+
+<!-- 들어가기 -->
+<div class="login card" id="login">
+  <h1>관리자</h1>
+  <p class="sub">증언: 다음 페이지 · 홈페이지</p>
+  <div class="row">
+    <input id="code" type="password" inputmode="text" autocomplete="current-password"
+           autocapitalize="off" spellcheck="false" placeholder="관리자 코드">
+    <button id="go">열기</button>
+  </div>
+  <p class="err hidden" id="err"></p>
+</div>
+
+<!-- 본문 -->
+<div class="wrap hidden" id="panel">
+
+  <div class="row-between">
+    <div>
+      <h1>관리자</h1>
+      <p class="sub">증언: 다음 페이지 · <span id="updated"></span></p>
+    </div>
+    <div class="row">
+      <button class="ghost" id="refresh">새로 고침</button>
+      <button class="ghost" id="logout">나가기</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>다녀간 수</h2>
+    <p class="sub" id="since"></p>
+    <div class="stats" id="stats" style="margin-top:14px"></div>
+  </div>
+
+  <div class="card">
+    <div class="row-between">
+      <h2 style="margin:0">날짜별</h2>
+      <select id="range" style="width:auto;height:38px">
+        <option value="14">최근 14일</option>
+        <option value="30" selected>최근 30일</option>
+        <option value="90">최근 90일</option>
+        <option value="365">최근 1년</option>
+      </select>
+    </div>
+    <div class="bars" id="bars"></div>
+    <div class="bar-axis"><span id="ax-from"></span><span id="ax-to"></span></div>
+    <p class="muted" style="margin-top:10px">막대에 손을 올리면 그날 숫자가 나옵니다. 짙은 막대는 오늘입니다.</p>
+  </div>
+
+  <div class="card">
+    <h2>전시실별</h2>
+    <p class="sub">온라인 전시관 안에서 어느 전시실을 열어 봤는지입니다.</p>
+    <div class="scroll" style="margin-top:12px"><table id="rooms"></table></div>
+    <div style="margin-top:16px"><button class="ghost" id="csv">CSV 로 내려받기</button></div>
+  </div>
+
+  <div class="card">
+    <h2>홈페이지 문구 고치기</h2>
+    <p class="sub">고치고 저장하면 홈페이지에 바로 반영됩니다.
+      칸을 <b>비우고 저장하면</b> 원래 문구로 돌아갑니다.</p>
+    <div class="edit" id="edit" style="margin-top:16px"></div>
+    <div class="save-row">
+      <button id="save">저장</button>
+      <span class="ok hidden" id="saved"></span>
+      <span class="err hidden" id="save-err" style="margin:0"></span>
+    </div>
+  </div>
+
+  <p class="muted">다녀간 수는 누가 왔는지 남기지 않습니다. 날짜와 어느 화면인지,
+    그리고 그 브라우저가 그날 처음인지만 셉니다. IP 주소와 쿠키는 쓰지 않습니다.</p>
+
+</div>
+
+<script src="assets/admin.js"></script>
+</body>
+</html>

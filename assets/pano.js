@@ -322,6 +322,7 @@
   function paint() {
     var sc = FLAT[at];
     if (!sc) return;
+    if (window.tnpCount) window.tnpCount('room:' + sc.roomNo);
     elRoom.textContent = sc.roomName;
     elCount.textContent = sc.roomNo + ' · ' + (sc.inRoom + 1) + ' / ' + sc.roomTotal;
     btnPrev.disabled = (at === 0);
@@ -499,6 +500,7 @@
     }
     go(i);
     showHint();
+    if (window.tnpCount) window.tnpCount('tour');
     if (location.hash !== '#tour') history.pushState(null, '', location.pathname + '#tour');
   }
 
@@ -581,6 +583,19 @@
         history.replaceState(null, '', location.pathname + '#3d');
         start(null);
       }
+
+      // 관리자가 전시실 이름을 고치면 둘러보기 쪽도 같이 바뀝니다
+      document.addEventListener('tnp:cms', function () {
+        FLAT.forEach(function (sc) {
+          var el = document.querySelector('#view-hall [data-cms="room.' + sc.roomNo + '"]');
+          if (el && el.textContent.trim()) sc.roomName = el.textContent.trim();
+        });
+        $$('button', elList).forEach(function (b) {
+          var el = document.querySelector('#view-hall [data-cms="room.' + b.dataset.room + '"]');
+          if (el && el.textContent.trim()) $('.rt', b).textContent = el.textContent.trim();
+        });
+        if (open) paint();
+      });
     })
     .catch(function () { /* 목록이 없으면 전처럼 '준비 중' 알림이 뜹니다 */ });
 
