@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Noto+Sans+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/guide.css">
+<link rel="stylesheet" href="assets/pano.css">
 <style>
   :root {
     --serif: 'Noto Serif KR', 'Nanum Myeongjo', serif;
@@ -311,6 +312,32 @@
   </div>
 </div>
 
+<!-- ───────── 360 둘러보기 ───────── -->
+<div class="pano" id="pano" hidden>
+  <canvas></canvas>
+
+  <div class="pano-top">
+    <button type="button" class="pano-back" aria-label="둘러보기 닫기">✕<span>나가기</span></button>
+    <p class="pano-where"><span class="rm"></span><span class="ct"></span></p>
+    <button type="button" class="pano-icon menu" aria-label="전시실 고르기">☰</button>
+  </div>
+
+  <div class="pano-bottom">
+    <button type="button" class="pano-step prev">← 이전 지점</button>
+    <button type="button" class="pano-step next go">다음 지점 →</button>
+  </div>
+
+  <p class="pano-wait" hidden>사진을 불러오는 중…</p>
+  <p class="pano-hint">끌어서 둘러보세요<span class="pc"> · <b>W</b> 앞으로 <b>S</b> 뒤로 <b>A</b><b>D</b> 돌아보기</span></p>
+
+  <div class="pano-menu" hidden>
+    <h3>전시실 고르기</h3>
+    <ol></ol>
+  </div>
+</div>
+
 <script src="assets/guide.js"></script>
+<script src="assets/pano.js"></script>
+
 </body>
 </html>

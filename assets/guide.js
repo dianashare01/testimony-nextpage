@@ -31,7 +31,7 @@
     t.addEventListener('click', function () { show(t.dataset.view, true); });
   });
 
-  show(location.hash === '#3d' ? 'hall' : 'guide', false);
+  show(location.hash.indexOf('#3d') === 0 || location.hash === '#tour' ? 'hall' : 'guide', false);
 
   /* ── 모두 펼치기 ──────────────────────────── */
 
@@ -74,6 +74,7 @@
 
   $$('[data-soon]').forEach(function (el) {
     el.addEventListener('click', function (e) {
+      if (!el.hasAttribute('data-soon')) return;
       e.preventDefault();
       openModal(el);
     });
