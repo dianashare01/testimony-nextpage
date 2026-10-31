@@ -38,7 +38,10 @@ const rooms = fs.readdirSync(TOUR, { withFileTypes: true })
 // mask — 찍는 사람을 덮는 모자이크 자리. [머리, 몸] 두 덩이.
 //        한 덩이는 [가운데 u, 가운데 v, 반지름 u, 반지름 v]
 // grid — 모자이크 칸 수 (360도 기준). 작을수록 굵게 덮입니다
+// open — false 면 둘러보기를 켜지 않고 「오픈 준비 중입니다」 알림만 뜹니다.
+//        사진을 다시 찍어 공개할 때 true 로 바꾸세요.
 const out = {
+  open: false,
   base: 'tour/', yaw: 180, down: 34, nadir: [0.82, 0.93],
   mask: [[0.513, 0.44, 0.085, 0.15], [0.520, 0.82, 0.205, 0.28]], grid: 130,
   rooms

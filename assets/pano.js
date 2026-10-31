@@ -523,6 +523,11 @@
   fetch('tour/tour.json', { cache: 'no-cache' })
     .then(function (r) { return r.json(); })
     .then(function (data) {
+      // tour.json 의 open 이 false 면 둘러보기를 아예 켜지 않습니다.
+      // 단추에 data-soon 이 그대로 남아, 누르면 「오픈 준비 중입니다」가 뜹니다.
+      // 다시 열려면 tour.json 의 "open": false 를 true 로 바꾸면 됩니다.
+      if (data.open === false) return;
+
       if (data.block) {
         bFrom = data.block[0] * Math.PI / 180;
         bTo = data.block[1] * Math.PI / 180;
