@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Noto+Sans+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/guide.css">
-<link rel="stylesheet" href="assets/pano.css">
+<link rel="stylesheet" href="assets/tour.css">
 <style>
   :root {
     --serif: 'Noto Serif KR', 'Nanum Myeongjo', serif;
@@ -313,32 +313,58 @@
 </div>
 
 <!-- ───────── 360 둘러보기 ───────── -->
-<div class="pano" id="pano" hidden>
-  <canvas></canvas>
+<div class="tour" id="tour" hidden>
 
-  <div class="pano-top">
-    <button type="button" class="pano-back" aria-label="둘러보기 닫기">✕<span>나가기</span></button>
-    <p class="pano-where"><span class="rm"></span><span class="ct"></span></p>
-    <button type="button" class="pano-icon menu" aria-label="전시실 고르기">☰</button>
+  <aside class="t-side">
+    <div class="t-side-top">
+      <p class="ttl">증언 : 다음 페이지<span class="sub">온라인 전시관</span></p>
+      <button type="button" class="t-btn close" aria-label="둘러보기 닫기">✕</button>
+    </div>
+    <nav class="t-list" aria-label="전시실과 지점"></nav>
+  </aside>
+
+  <div class="t-stage">
+    <canvas></canvas>
+
+    <div class="t-spots"></div>
+
+    <p class="t-cap"><b></b><span></span></p>
+
+    <button type="button" class="t-step prev" aria-label="이전 지점">‹</button>
+    <button type="button" class="t-step next" aria-label="다음 지점">›</button>
+
+    <div class="t-zoom">
+      <button type="button" class="t-btn zin" aria-label="크게 보기"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M11 8v6M8 11h6M16 16l5 5"/></svg></button>
+      <button type="button" class="t-btn zout" aria-label="작게 보기"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M8 11h6M16 16l5 5"/></svg></button>
+    </div>
+
+    <div class="t-tools">
+      <button type="button" class="t-btn home" aria-label="처음으로"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></button>
+      <button type="button" class="t-btn play" aria-label="자동 플레이"><svg viewBox="0 0 24 24"><path d="M7 4l12 8-12 8z" fill="currentColor" stroke="none"/></svg></button>
+      <button type="button" class="t-btn full" aria-label="전체 화면"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    </div>
+
+    <button type="button" class="t-btn t-side-toggle" aria-label="전시실 목록"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+
+    <p class="t-wait" hidden>사진을 불러오는 중…</p>
+    <p class="t-hint">끌어서 둘러보세요 · 두 번 누르면 확대</p>
+
+    <div class="t-look" hidden>
+      <div class="t-look-top">
+        <div><b></b><p></p></div>
+        <button type="button" class="t-btn close" aria-label="닫기">✕</button>
+      </div>
+      <div class="t-look-img"><img alt=""></div>
+      <p class="t-look-hint">휠이나 두 손가락으로 크게, 끌어서 옮기기</p>
+    </div>
   </div>
 
-  <div class="pano-bottom">
-    <button type="button" class="pano-step prev">← 이전 지점</button>
-    <button type="button" class="pano-step next go">다음 지점 →</button>
-  </div>
-
-  <p class="pano-wait" hidden>사진을 불러오는 중…</p>
-  <p class="pano-hint">끌어서 둘러보세요<span class="pc"> · <b>W</b> 앞으로 <b>S</b> 뒤로 <b>A</b><b>D</b> 돌아보기</span></p>
-
-  <div class="pano-menu" hidden>
-    <h3>전시실 고르기</h3>
-    <ol></ol>
-  </div>
 </div>
 
 <script src="assets/site.js"></script>
+
 <script src="assets/guide.js"></script>
-<script src="assets/pano.js"></script>
+<script src="assets/tour.js"></script>
 
 </body>
 </html>
