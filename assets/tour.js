@@ -525,7 +525,8 @@
     if (!drag) return;
     var k = fov * D2R / (H || 1);
     toYaw -= (e.clientX - drag.x) * k;
-    toPitch = Math.max(-1.35, Math.min(1.35, toPitch + (e.clientY - drag.y) * k));
+    // 위아래는 끄는 방향 그대로 — 아래로 끌면 아래를 봅니다
+    toPitch = Math.max(-1.35, Math.min(1.35, toPitch - (e.clientY - drag.y) * k));
     yaw = toYaw; pitch = toPitch;          // 끄는 동안은 손끝을 그대로 따라갑니다
     drag.moved += Math.abs(e.clientX - drag.x) + Math.abs(e.clientY - drag.y);
     drag.x = e.clientX; drag.y = e.clientY;

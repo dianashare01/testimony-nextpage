@@ -77,9 +77,11 @@ function writeBmp(file, px, size) {
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       const o = (y * size + x) * 3;
-      line[x * 3] = px[o + 2];         // BMP 는 파랑·초록·빨강 차례
+      // px 는 이미 파랑·초록·빨강 차례입니다 (PowerShell 이 떠 준 24bppRgb 가 BGR).
+      // BMP 도 같은 차례라 그대로 옮깁니다. 여기서 뒤집으면 빨강과 파랑이 바뀝니다.
+      line[x * 3] = px[o];
       line[x * 3 + 1] = px[o + 1];
-      line[x * 3 + 2] = px[o];
+      line[x * 3 + 2] = px[o + 2];
     }
     fs.writeSync(fd, line);
   }
