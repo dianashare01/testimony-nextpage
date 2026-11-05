@@ -35,6 +35,10 @@
   var first = firstToday();
   var sent = {};
 
+  // 영·중·일 쪽은 따로 셉니다 — 한국어 숫자에 섞이지 않게 (home.en, hall.ja …)
+  var LANG = (document.body && document.body.dataset.lang) || 'ko';
+  var SUF = LANG === 'ko' ? '' : '.' + LANG;
+
   function count(page) {
     if (!OK_KEY.test(page) || sent[page]) return;
     sent[page] = true;
@@ -49,11 +53,11 @@
 
   window.tnpCount = count;
 
-  count('home');
-  if (location.hash === '#3d' || location.hash === '#tour') count('hall');
+  count('home' + SUF);
+  if (location.hash === '#3d' || location.hash === '#tour') count('hall' + SUF);
 
   window.addEventListener('hashchange', function () {
-    if (location.hash === '#3d' || location.hash === '#tour') count('hall');
+    if (location.hash === '#3d' || location.hash === '#tour') count('hall' + SUF);
   });
 
   /* ── 관리자가 고친 문구 ──────────────────── */

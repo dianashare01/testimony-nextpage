@@ -1,6 +1,5 @@
 {
   "open": true,
-  "base": "tour/",
   "fov": 78,
   "fovMin": 18,
   "fovMax": 100,
@@ -8,11 +7,21 @@
   "rooms": [
     {
       "no": "01",
-      "name": "안내데스크",
+      "name": {
+        "ko": "안내데스크",
+        "en": "Information Desk",
+        "zh": "服务台",
+        "ja": "総合案内"
+      },
       "scenes": [
         {
           "id": "01",
-          "title": "입구 · 안내데스크",
+          "title": {
+            "ko": "입구 · 안내데스크",
+            "en": "Entrance · Information Desk",
+            "zh": "入口·服务台",
+            "ja": "入口・総合案内"
+          },
           "yaw": 0,
           "fwd": -121
         }
@@ -20,32 +29,57 @@
     },
     {
       "no": "02",
-      "name": "서문 · 연표의 길",
+      "name": {
+        "ko": "서문 · 연표의 길",
+        "en": "Preface · A Timeline of the Movement",
+        "zh": "序·年表之路",
+        "ja": "序文・年表の道"
+      },
       "scenes": [
         {
           "id": "02",
-          "title": "서문 — 나의 마음은 지지 않았다",
+          "title": {
+            "ko": "서문 — 나의 마음은 지지 않았다",
+            "en": "Preface — My Heart Is Not Broken Yet",
+            "zh": "序 — 我的心没有输",
+            "ja": "序文 — 私の心は負けていない"
+          },
           "yaw": 0,
           "fwd": 45,
           "back": -13
         },
         {
           "id": "03",
-          "title": "연표의 길 · 1975 — 1999",
+          "title": {
+            "ko": "연표의 길 · 1975 — 1999",
+            "en": "A Timeline of the Movement · 1975–1999",
+            "zh": "年表之路·1975—1999",
+            "ja": "年表の道・1975—1999"
+          },
           "yaw": 0,
           "fwd": -162,
           "back": 57
         },
         {
           "id": "04",
-          "title": "연표의 길 · 2000년대",
+          "title": {
+            "ko": "연표의 길 · 2000년대",
+            "en": "A Timeline of the Movement · 2000s",
+            "zh": "年表之路·2000年代",
+            "ja": "年表の道・2000年代"
+          },
           "yaw": 0,
           "fwd": 50,
           "back": -176
         },
         {
           "id": "05",
-          "title": "연표의 길 · 2010 — 2020년대",
+          "title": {
+            "ko": "연표의 길 · 2010 — 2020년대",
+            "en": "A Timeline of the Movement · 2010s–2020s",
+            "zh": "年表之路·2010—2020年代",
+            "ja": "年表の道・2010—2020年代"
+          },
           "yaw": 0,
           "fwd": 15,
           "back": -92
@@ -54,11 +88,21 @@
     },
     {
       "no": "03",
-      "name": "1부 · 2,744개의 기록",
+      "name": {
+        "ko": "1부 · 2,744개의 기록",
+        "en": "Part 1 · 2,744 Records",
+        "zh": "第一部分·2,744件记录",
+        "ja": "第1部・2,744件の記録"
+      },
       "scenes": [
         {
           "id": "06",
-          "title": "2,744개의 기록",
+          "title": {
+            "ko": "2,744개의 기록",
+            "en": "2,744 Records",
+            "zh": "2,744件记录",
+            "ja": "2,744件の記録"
+          },
           "yaw": 45,
           "fwd": -30,
           "back": 33
@@ -67,39 +111,69 @@
     },
     {
       "no": "04",
-      "name": "2부 · 증언의 목소리",
+      "name": {
+        "ko": "2부 · 증언의 목소리",
+        "en": "Part 2 · Voices of Testimony",
+        "zh": "第二部分·证言之声",
+        "ja": "第2部・証言の声"
+      },
       "scenes": [
         {
           "id": "07",
-          "title": "증언의 목소리 · 들머리",
+          "title": {
+            "ko": "증언의 목소리 · 들머리",
+            "en": "Voices of Testimony · Entrance",
+            "zh": "证言之声·入口",
+            "ja": "証言の声・入口"
+          },
           "yaw": 0,
           "fwd": -95,
           "back": 6
         },
         {
           "id": "08",
-          "title": "증언의 목소리 ②",
+          "title": {
+            "ko": "증언의 목소리 ②",
+            "en": "Voices of Testimony ②",
+            "zh": "证言之声 ②",
+            "ja": "証言の声 ②"
+          },
           "yaw": 0,
           "fwd": -95,
           "back": 100
         },
         {
           "id": "09",
-          "title": "증언의 목소리 ③",
+          "title": {
+            "ko": "증언의 목소리 ③",
+            "en": "Voices of Testimony ③",
+            "zh": "证言之声 ③",
+            "ja": "証言の声 ③"
+          },
           "yaw": 0,
           "fwd": -95,
           "back": 100
         },
         {
           "id": "10",
-          "title": "증언의 목소리 ④",
+          "title": {
+            "ko": "증언의 목소리 ④",
+            "en": "Voices of Testimony ④",
+            "zh": "证言之声 ④",
+            "ja": "証言の声 ④"
+          },
           "yaw": 0,
           "fwd": -95,
           "back": 100
         },
         {
           "id": "11",
-          "title": "증언의 목소리 ⑤",
+          "title": {
+            "ko": "증언의 목소리 ⑤",
+            "en": "Voices of Testimony ⑤",
+            "zh": "证言之声 ⑤",
+            "ja": "証言の声 ⑤"
+          },
           "yaw": 30,
           "fwd": 73,
           "back": 112
@@ -108,11 +182,21 @@
     },
     {
       "no": "05",
-      "name": "기억의 경로",
+      "name": {
+        "ko": "기억의 경로",
+        "en": "Paths of Memory",
+        "zh": "记忆的路径",
+        "ja": "記憶の経路"
+      },
       "scenes": [
         {
           "id": "12",
-          "title": "기억의 경로",
+          "title": {
+            "ko": "기억의 경로",
+            "en": "Paths of Memory",
+            "zh": "记忆的路径",
+            "ja": "記憶の経路"
+          },
           "yaw": -15,
           "fwd": 166,
           "back": -28
@@ -121,32 +205,57 @@
     },
     {
       "no": "06",
-      "name": "삶이 보여준 증언",
+      "name": {
+        "ko": "삶이 보여준 증언",
+        "en": "Testimonies Through Lives",
+        "zh": "生命呈现的证言",
+        "ja": "人生が示した証言"
+      },
       "scenes": [
         {
           "id": "13",
-          "title": "삶이 보여준 증언 · 들머리",
+          "title": {
+            "ko": "삶이 보여준 증언 · 들머리",
+            "en": "Testimonies Through Lives · Entrance",
+            "zh": "生命呈现的证言·入口",
+            "ja": "人生が示した証言・入口"
+          },
           "yaw": 0,
           "fwd": -100,
           "back": 103
         },
         {
           "id": "14",
-          "title": "삶이 보여준 증언 ②",
+          "title": {
+            "ko": "삶이 보여준 증언 ②",
+            "en": "Testimonies Through Lives ②",
+            "zh": "生命呈现的证言 ②",
+            "ja": "人生が示した証言 ②"
+          },
           "yaw": -10,
           "fwd": -100,
           "back": 105
         },
         {
           "id": "15",
-          "title": "삶이 보여준 증언 ③",
+          "title": {
+            "ko": "삶이 보여준 증언 ③",
+            "en": "Testimonies Through Lives ③",
+            "zh": "生命呈现的证言 ③",
+            "ja": "人生が示した証言 ③"
+          },
           "yaw": -10,
           "fwd": -100,
           "back": 92
         },
         {
           "id": "16",
-          "title": "삶이 보여준 증언 ④",
+          "title": {
+            "ko": "삶이 보여준 증언 ④",
+            "en": "Testimonies Through Lives ④",
+            "zh": "生命呈现的证言 ④",
+            "ja": "人生が示した証言 ④"
+          },
           "yaw": -15,
           "fwd": 27,
           "back": 118
@@ -155,32 +264,57 @@
     },
     {
       "no": "07",
-      "name": "전환 통로",
+      "name": {
+        "ko": "전환 통로",
+        "en": "Transition Passage",
+        "zh": "转换通道",
+        "ja": "転換通路"
+      },
       "scenes": [
         {
           "id": "17",
-          "title": "전환 통로 · 들머리",
+          "title": {
+            "ko": "전환 통로 · 들머리",
+            "en": "Transition Passage · Entrance",
+            "zh": "转换通道·入口",
+            "ja": "転換通路・入口"
+          },
           "yaw": 0,
           "fwd": -9,
           "back": 110
         },
         {
           "id": "18",
-          "title": "전환 통로 ②",
+          "title": {
+            "ko": "전환 통로 ②",
+            "en": "Transition Passage ②",
+            "zh": "转换通道 ②",
+            "ja": "転換通路 ②"
+          },
           "yaw": 15,
           "fwd": 23,
           "back": 41
         },
         {
           "id": "20",
-          "title": "전환 통로 ③",
+          "title": {
+            "ko": "전환 통로 ③",
+            "en": "Transition Passage ③",
+            "zh": "转换通道 ③",
+            "ja": "転換通路 ③"
+          },
           "yaw": 30,
           "fwd": -17,
           "back": -16
         },
         {
           "id": "21",
-          "title": "전환 통로 ④",
+          "title": {
+            "ko": "전환 통로 ④",
+            "en": "Transition Passage ④",
+            "zh": "转换通道 ④",
+            "ja": "転換通路 ④"
+          },
           "yaw": 20,
           "fwd": -95,
           "back": -179
@@ -189,18 +323,33 @@
     },
     {
       "no": "08",
-      "name": "3부 · 숫자가 남긴 말",
+      "name": {
+        "ko": "3부 · 숫자가 남긴 말",
+        "en": "Part 3 · The Messages Left by Numbers",
+        "zh": "第三部分·数字留下的讯息",
+        "ja": "第3部・数字が残した言葉"
+      },
       "scenes": [
         {
           "id": "22",
-          "title": "숫자가 남긴 말",
+          "title": {
+            "ko": "숫자가 남긴 말",
+            "en": "The Messages Left by Numbers",
+            "zh": "数字留下的讯息",
+            "ja": "数字が残した言葉"
+          },
           "yaw": 25,
           "fwd": 89,
           "back": 125
         },
         {
           "id": "23",
-          "title": "숫자가 남긴 말 ②",
+          "title": {
+            "ko": "숫자가 남긴 말 ②",
+            "en": "The Messages Left by Numbers ②",
+            "zh": "数字留下的讯息 ②",
+            "ja": "数字が残した言葉 ②"
+          },
           "yaw": -10,
           "fwd": 34,
           "back": -76
@@ -209,22 +358,38 @@
     },
     {
       "no": "09",
-      "name": "서고의 숲",
+      "name": {
+        "ko": "서고의 숲",
+        "en": "The Forest of Archives",
+        "zh": "书库之林",
+        "ja": "書庫の森"
+      },
       "scenes": [
         {
           "id": "24",
-          "title": "서고의 숲 · 자료 열람",
+          "title": {
+            "ko": "서고의 숲 · 자료 열람",
+            "en": "The Forest of Archives · Reading the Records",
+            "zh": "书库之林·资料阅览",
+            "ja": "書庫の森・資料閲覧"
+          },
           "yaw": -20,
           "fwd": 105,
           "back": 112
         },
         {
           "id": "25",
-          "title": "서고의 숲 ②",
+          "title": {
+            "ko": "서고의 숲 ②",
+            "en": "The Forest of Archives ②",
+            "zh": "书库之林 ②",
+            "ja": "書庫の森 ②"
+          },
           "yaw": -10,
           "back": -55
         }
       ]
     }
-  ]
+  ],
+  "_base": "사진 폴더 경로는 각 쪽의 <div id=\"tour\" data-base=\"…\"> 에 적습니다."
 }

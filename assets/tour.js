@@ -16,6 +16,38 @@
   var root = $('#tour');
   if (!root) return;
 
+  /* 쪽마다 말이 다릅니다 — <body data-lang="ko|en|zh|ja"> 를 보고 고릅니다.
+     사진 폴더까지의 길도 쪽이 어디 있느냐에 따라 달라서(/en/ 같은 하위 폴더),
+     <div id="tour" data-base="../tour/"> 로 받습니다. 없으면 'tour/' 입니다. */
+  var LANG = (document.body.dataset.lang || 'ko');
+  var BASE = root.dataset.base || 'tour/';
+
+  // 목록의 이름은 {ko,en,zh,ja} 꾸러미입니다. 옛 파일처럼 글자 하나면 그대로 씁니다.
+  function L(v) {
+    if (v == null) return '';
+    if (typeof v === 'string') return v;
+    return v[LANG] || v.ko || '';
+  }
+
+  var WORDS = {
+    ko: { look: '자세히 보기', play: '자동 플레이', stop: '자동 플레이 멈춤' },
+    en: { look: 'Take a closer look', play: 'Auto play', stop: 'Stop auto play' },
+    zh: { look: '放大查看', play: '自动播放', stop: '停止自动播放' },
+    ja: { look: '拡大して見る', play: '自動再生', stop: '自動再生を停止' }
+  };
+  var W = WORDS[LANG] || WORDS.ko;
+
+  /* 전시실 이름은 그 쪽에 **이미 번역돼 있는 단추 글씨**를 먼저 씁니다.
+     없을 때만 목록(tour.json)에 적힌 말을 씁니다. */
+  function roomName(rm) {
+    var el = null;
+    $$('#view-hall .room').forEach(function (b) {
+      if ((($('.no', b) || {}).textContent || '').trim() === rm.no) el = $('.rt', b);
+    });
+    var t = el && el.textContent.trim();
+    return t || L(rm.name);
+  }
+
   var canvas = $('.t-stage canvas', root);
   var elList = $('.t-list', root);
   var elCapT = $('.t-cap b', root);
@@ -215,7 +247,7 @@
     var list = FACES.map(function (f) {
       var im = new Image();
       im.decoding = 'async';
-      im.src = CFG.base + id + '/' + f + (small ? '-s' : '') + '.jpg';
+      im.src = BASE + id + '/' + f + (small ? '-s' : '') + '.jpg';
       return im;
     });
     cache[key] = list;
@@ -339,7 +371,7 @@
     if (SC[at - 1]) add('go', back, -32, SC[at - 1].title, SVG_UP, function () { go(at - 1); });
 
     (sc.spots || []).forEach(function (s) {
-      add('look', s.yaw, s.pitch || 0, s.label || '자세히 보기', SVG_EYE, function () { look(s); });
+      add('look', s.yaw, s.pitch || 0, s.label || W.look, SVG_EYE, function () { look(s); });
     });
   }
 
@@ -384,9 +416,9 @@
   }
 
   function look(s) {
-    $('.t-look-top b', root).textContent = s.label || '자세히 보기';
+    $('.t-look-top b', root).textContent = s.label || W.look;
     $('.t-look-top p', root).textContent = s.text || '';
-    lookImg.src = s.img ? (CFG.base + s.img) : '';
+    lookImg.src = s.img ? (BASE + s.img) : '';
     lz = { s: 1, x: 0, y: 0 };
     lookDraw();
     look0.hidden = false;
@@ -614,7 +646,7 @@
     if (playing) return;
     playing = true;
     btnPlay.classList.add('on');
-    btnPlay.setAttribute('aria-label', '자동 플레이 멈춤');
+    btnPlay.setAttribute('aria-label', W.stop);
     btnPlay.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg>';
     toYaw = yaw;
     playTimer = setTimeout(tick, (CFG.dwell || 9) * 1000);
@@ -626,7 +658,7 @@
     playing = false;
     clearTimeout(playTimer);
     btnPlay.classList.remove('on');
-    btnPlay.setAttribute('aria-label', '자동 플레이');
+    btnPlay.setAttribute('aria-label', W.play);
     btnPlay.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 4l12 8-12 8z" fill="currentColor" stroke="none"/></svg>';
     toYaw = yaw;
   }
@@ -741,7 +773,7 @@
 
   /* ── 목록 불러오기 ────────────────────── */
 
-  fetch('tour/tour.json', { cache: 'no-cache' })
+  fetch(BASE + 'tour.json', { cache: 'no-cache' })
     .then(function (r) { return r.json(); })
     .then(function (data) {
       if (data.open === false || !gl) return;
@@ -753,8 +785,8 @@
       data.rooms.forEach(function (rm) {
         rm.scenes.forEach(function (s) {
           SC.push({
-            id: s.id, title: s.title, yaw: s.yaw || 0, fwd: s.fwd, back: s.back,
-            spots: s.spots || [], room: rm.name, roomNo: rm.no,
+            id: s.id, title: L(s.title), yaw: s.yaw || 0, fwd: s.fwd, back: s.back,
+            spots: s.spots || [], room: roomName(rm), roomNo: rm.no,
           });
         });
       });
@@ -765,13 +797,13 @@
       data.rooms.forEach(function (rm) {
         var h = document.createElement('p');
         h.className = 't-room';
-        h.textContent = rm.no + '  ' + rm.name;
+        h.textContent = rm.no + '  ' + roomName(rm);
         elList.appendChild(h);
         rm.scenes.forEach(function (s) {
           var b = document.createElement('button');
           b.type = 'button';
           b.dataset.i = String(i++);
-          b.textContent = s.title;
+          b.textContent = L(s.title);
           b.addEventListener('click', function () {
             stopPlay();
             root.classList.remove('menu');
@@ -818,5 +850,9 @@
         start(null);
       }
     })
-    .catch(function () { /* 목록이 없으면 전처럼 '준비 중' 알림이 뜹니다 */ });
+    .catch(function (e) {
+      // 목록이 없으면 전처럼 '준비 중' 알림이 뜹니다.
+      // 다만 까닭은 남겨 둡니다 — 조용히 삼키면 고칠 때 한참 헤맵니다.
+      if (window.console) console.warn('[tour] 목록을 못 폈습니다:', e);
+    });
 })();
