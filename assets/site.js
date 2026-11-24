@@ -53,6 +53,12 @@
 
   window.tnpCount = count;
 
+  /* 전시관을 열었다고 알리는 문. 탭을 눌러 들어가도 세어지도록 guide.js 가 부릅니다.
+     (주소만 바꾸는 history.replaceState 는 hashchange 를 일으키지 않아서,
+      전에는 탭으로 들어간 사람이 한 명도 안 세어졌습니다.)
+     count() 가 같은 화면을 한 번만 세므로 여러 번 불러도 괜찮습니다. */
+  window.tnpHall = function () { count('hall' + SUF); };
+
   count('home' + SUF);
   if (location.hash === '#3d' || location.hash === '#tour') count('hall' + SUF);
 

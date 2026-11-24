@@ -20,6 +20,9 @@
     Object.keys(views).forEach(function (k) {
       if (views[k]) views[k].hidden = (k !== name);
     });
+    // 전시관을 열면 세어 둡니다. 아래 replaceState 는 주소만 바꾸고
+    // hashchange 를 일으키지 않아서, 이 줄이 없으면 탭으로 들어간 사람이 안 세어집니다.
+    if (name === 'hall' && window.tnpHall) window.tnpHall();
     if (push) {
       var h = (name === 'hall') ? '#3d' : ' ';
       history.replaceState(null, '', location.pathname + (name === 'hall' ? h : ''));
