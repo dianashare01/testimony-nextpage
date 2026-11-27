@@ -143,6 +143,71 @@
   text-shadow: 0 1px 8px rgba(0, 0, 0, .8);
 }
 
+/* ── 자막 ────────────────────────────────── */
+
+/* 바닥 단추들(오른쪽 아래)과 좌우 넘김 단추를 피해서 가운데 아래에 놓습니다 */
+.t-sub {
+  position: absolute;
+  left: 50px;
+  right: 50px;
+  bottom: 68px;
+  z-index: 3;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(244, 236, 230, .16);
+  background: rgba(13, 9, 20, .84);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.t-sub[hidden] { display: none; }
+
+/* 긴 자막(영문은 470자가 넘습니다)은 줄이지 않고 이 안에서 굴립니다 */
+.t-sub .tx {
+  margin: 0;
+  max-height: 24vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  white-space: pre-line;          /* 원고의 줄바꿈을 살립니다 */
+  font-size: 14.5px;
+  line-height: 1.75;
+  word-break: keep-all;
+  text-wrap: pretty;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;            /* 자막 안에서는 손가락으로 굴릴 수 있게 */
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.t-sub .tx::-webkit-scrollbar { width: 5px; }
+.t-sub .tx::-webkit-scrollbar-thumb { background: rgba(244, 236, 230, .26); border-radius: 3px; }
+
+.t-sub-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.t-sub-nav .no {
+  font-size: 12px;
+  color: #d9cfe0;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-sub-nav .no[hidden],
+.t-sub-nav .t-btn[hidden] { display: none; }
+
+.t-sub-nav .t-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 17px;
+  line-height: 1;
+}
+
 /* ── 단추들 ──────────────────────────────── */
 
 .t-btn {
@@ -383,6 +448,11 @@
 
   .t-cap { padding: 14px 16px 34px; }
   .t-cap b { font-size: 15px; }
+
+  /* 좁은 화면 — 왼쪽 아래 목록 단추와 오른쪽 아래 단추들 위로 올립니다 */
+  .t-sub { left: 12px; right: 12px; bottom: 62px; padding: 11px 13px; }
+  .t-sub .tx { font-size: 13.5px; line-height: 1.7; max-height: 30vh; }
+  .t-sub-nav { margin-top: 7px; }
   .t-zoom { top: auto; bottom: 70px; transform: none; }
   .t-step { width: 30px; height: 56px; }
 }

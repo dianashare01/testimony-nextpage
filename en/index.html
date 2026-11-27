@@ -340,6 +340,7 @@
     <div class="t-tools">
       <button type="button" class="t-btn home" aria-label="Back to the start"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></button>
       <button type="button" class="t-btn play" aria-label="Auto play"><svg viewBox="0 0 24 24"><path d="M7 4l12 8-12 8z" fill="currentColor" stroke="none"/></svg></button>
+      <button type="button" class="t-btn cc" aria-pressed="true" aria-label="Show subtitles" title="Show subtitles" hidden><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.2 10.4a2.6 2.6 0 100 3.2M17 10.4a2.6 2.6 0 100 3.2"/></svg></button>
       <button type="button" class="t-btn full" aria-label="Full screen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
     </div>
 
@@ -347,6 +348,15 @@
 
     <p class="t-wait" hidden>Loading the photo…</p>
     <p class="t-hint">Drag to look around · Double-tap to zoom</p>
+
+    <div class="t-sub" hidden>
+      <p class="tx"></p>
+      <div class="t-sub-nav">
+        <button type="button" class="t-btn sp" aria-label="Previous subtitle">&lsaquo;</button>
+        <span class="no" hidden></span>
+        <button type="button" class="t-btn sn" aria-label="Next subtitle">&rsaquo;</button>
+      </div>
+    </div>
 
     <div class="t-look" hidden>
       <div class="t-look-top">

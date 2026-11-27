@@ -30,12 +30,16 @@
   }
 
   var WORDS = {
-    ko: { look: '자세히 보기', play: '자동 플레이', stop: '자동 플레이 멈춤' },
-    en: { look: 'Take a closer look', play: 'Auto play', stop: 'Stop auto play' },
-    zh: { look: '放大查看', play: '自动播放', stop: '停止自动播放' },
-    ja: { look: '拡大して見る', play: '自動再生', stop: '自動再生を停止' }
+    ko: { look: '자세히 보기', play: '자동 플레이', stop: '자동 플레이 멈춤',
+          cap: '자막 보기', capOff: '자막 숨기기', capPrev: '이전 자막', capNext: '다음 자막' },
+    en: { look: 'Take a closer look', play: 'Auto play', stop: 'Stop auto play',
+          cap: 'Show subtitles', capOff: 'Hide subtitles', capPrev: 'Previous subtitle', capNext: 'Next subtitle' },
+    zh: { look: '放大查看', play: '自动播放', stop: '停止自动播放',
+          cap: '显示字幕', capOff: '隐藏字幕', capPrev: '上一条字幕', capNext: '下一条字幕' },
+    ja: { look: '拡大して見る', play: '自動再生', stop: '自動再生を停止',
+          cap: '字幕を表示', capOff: '字幕を隠す', capPrev: '前の字幕', capNext: '次の字幕' }
   };
-  var W = WORDS[LANG] || WORDS.ko;
+  var TXT = WORDS[LANG] || WORDS.ko;   /* 아래 177줄의 W(그림 너비)와 겹치지 않게 TXT 로 둡니다 */
 
   /* 전시실 이름은 그 쪽에 **이미 번역돼 있는 단추 글씨**를 먼저 씁니다.
      없을 때만 목록(tour.json)에 적힌 말을 씁니다. */
@@ -55,6 +59,12 @@
   var elSpots = $('.t-spots', root);
   var elWait = $('.t-wait', root);
   var elHint = $('.t-hint', root);
+  var elSub = $('.t-sub', root);
+  var elSubTx = $('.t-sub .tx', root);
+  var elSubNo = $('.t-sub .no', root);
+  var btnSubPrev = $('.t-sub .sp', root);
+  var btnSubNext = $('.t-sub .sn', root);
+  var btnCap = $('.t-btn.cc', root);
   var btnPrev = $('.t-step.prev', root);
   var btnNext = $('.t-step.next', root);
   var btnPlay = $('.t-btn.play', root);
@@ -324,11 +334,94 @@
     }
   }
 
+  /* ── 자막 ─────────────────────────────── */
+
+  /* 장면마다 번역 자막을 보여 줍니다 (tour/captions.json).
+     한 장면에 자막이 여러 개면 ‹ › 로 넘깁니다 — 글이 길어 한 화면에 다 안 들어갑니다.
+     문구는 감수를 거친 공식 번역본이라 줄이거나 고치지 않고 그대로 보여 줍니다.
+     국문 쪽은 아직 자막 원고가 없어 아예 안 불러옵니다. */
+
+  var CAP = null;     // { "01": { en:[…], zh:[…], ja:[…] }, … }
+  var capAt = 0;      // 지금 보여 주는 자막 순번
+  var capOn = true;   // 보기/숨기기 — 손님이 고른 값을 기억합니다
+
+  function capList() {
+    var sc = SC[at];
+    if (!CAP || !sc) return [];
+    var r = CAP[sc.id];
+    return (r && r[LANG]) || [];
+  }
+
+  function paintSub() {
+    if (!elSub) return;
+    var list = capList();
+    // 자막이 없는 장면(11번)이나 손님이 숨긴 경우에는 자리를 아예 비웁니다
+    if (!list.length || !capOn) { elSub.hidden = true; return; }
+    if (capAt >= list.length) capAt = 0;
+
+    elSub.hidden = false;
+    elSubTx.textContent = list[capAt];   // 줄바꿈은 CSS(white-space)가 살립니다
+    elSubTx.scrollTop = 0;
+
+    var many = list.length > 1;
+    elSubNo.hidden = !many;
+    btnSubPrev.hidden = !many;
+    btnSubNext.hidden = !many;
+    if (many) {
+      elSubNo.textContent = (capAt + 1) + ' / ' + list.length;
+      btnSubPrev.disabled = (capAt === 0);
+      btnSubNext.disabled = (capAt === list.length - 1);
+    }
+  }
+
+  function capStep(d) {
+    var n = capList().length;
+    var to = capAt + d;
+    if (to < 0 || to >= n) return;
+    capAt = to;
+    paintSub();
+  }
+
+  if (btnSubPrev) btnSubPrev.addEventListener('click', function () { capStep(-1); });
+  if (btnSubNext) btnSubNext.addEventListener('click', function () { capStep(1); });
+
+  if (btnCap) {
+    btnCap.addEventListener('click', function () {
+      capOn = !capOn;
+      btnCap.setAttribute('aria-pressed', String(capOn));
+      btnCap.setAttribute('aria-label', capOn ? TXT.capOff : TXT.cap);
+      btnCap.title = capOn ? TXT.capOff : TXT.cap;
+      try { localStorage.setItem('tnp:cap', capOn ? 'on' : 'off'); } catch (e) { /* 저장소를 못 써도 그대로 */ }
+      paintSub();
+    });
+  }
+
+  if (LANG !== 'ko' && elSub) {
+    try { capOn = localStorage.getItem('tnp:cap') !== 'off'; } catch (e) { /* 저장소를 못 쓰면 켜 둡니다 */ }
+    fetch(BASE + 'captions.json', { cache: 'no-cache' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        CAP = d;
+        if (btnCap) {
+          btnCap.hidden = false;
+          btnCap.setAttribute('aria-pressed', String(capOn));
+          btnCap.setAttribute('aria-label', capOn ? TXT.capOff : TXT.cap);
+          btnCap.title = capOn ? TXT.capOff : TXT.cap;
+        }
+        if (btnSubPrev) btnSubPrev.setAttribute('aria-label', TXT.capPrev);
+        if (btnSubNext) btnSubNext.setAttribute('aria-label', TXT.capNext);
+        paintSub();
+      })
+      .catch(function () { /* 자막을 못 불러와도 둘러보기는 그대로 돌아갑니다 */ });
+  }
+
   function paint() {
     var sc = SC[at];
     if (!sc) return;
     elCapT.textContent = sc.title;
     elCapS.textContent = sc.room + ' · ' + (at + 1) + ' / ' + SC.length;
+    capAt = 0;        // 장면이 바뀌면 자막도 첫 쪽부터
+    paintSub();
     btnPrev.disabled = (at === 0);
     btnNext.disabled = (at === SC.length - 1);
     $$('button', elList).forEach(function (b) {
@@ -371,7 +464,7 @@
     if (SC[at - 1]) add('go', back, -32, SC[at - 1].title, SVG_UP, function () { go(at - 1); });
 
     (sc.spots || []).forEach(function (s) {
-      add('look', s.yaw, s.pitch || 0, s.label || W.look, SVG_EYE, function () { look(s); });
+      add('look', s.yaw, s.pitch || 0, s.label || TXT.look, SVG_EYE, function () { look(s); });
     });
   }
 
@@ -416,7 +509,7 @@
   }
 
   function look(s) {
-    $('.t-look-top b', root).textContent = s.label || W.look;
+    $('.t-look-top b', root).textContent = s.label || TXT.look;
     $('.t-look-top p', root).textContent = s.text || '';
     lookImg.src = s.img ? (BASE + s.img) : '';
     lz = { s: 1, x: 0, y: 0 };
@@ -646,7 +739,7 @@
     if (playing) return;
     playing = true;
     btnPlay.classList.add('on');
-    btnPlay.setAttribute('aria-label', W.stop);
+    btnPlay.setAttribute('aria-label', TXT.stop);
     btnPlay.innerHTML = '<svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg>';
     toYaw = yaw;
     playTimer = setTimeout(tick, (CFG.dwell || 9) * 1000);
@@ -658,7 +751,7 @@
     playing = false;
     clearTimeout(playTimer);
     btnPlay.classList.remove('on');
-    btnPlay.setAttribute('aria-label', W.play);
+    btnPlay.setAttribute('aria-label', TXT.play);
     btnPlay.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7 4l12 8-12 8z" fill="currentColor" stroke="none"/></svg>';
     toYaw = yaw;
   }
